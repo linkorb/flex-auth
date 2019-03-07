@@ -2,7 +2,7 @@
 
 namespace FlexAuth\Type\JWT;
 
-use FlexAuth\Security\AuthFlexTypeProviderInterface;
+use FlexAuth\AuthFlexTypeProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

@@ -3,7 +3,7 @@
 namespace FlexAuth\Type\JWT;
 
 use Firebase\JWT\JWT;
-use FlexAuth\Security\AuthFlexTypeProviderInterface;
+use FlexAuth\AuthFlexTypeProviderInterface;
 
 /**
  * Class FlexTypeJWTEncoder
