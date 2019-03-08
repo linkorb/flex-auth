@@ -9,14 +9,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Class UserProviderFactory
- *
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
 class UserProviderFactory
 {
-    /**
-     * @var UserProviderFactoryInterface[]
-     */
+    /** @var UserProviderFactoryInterface[] */
     protected $factories = [];
 
     protected $authFlexTypeProvider;

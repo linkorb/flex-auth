@@ -2,11 +2,14 @@
 
 namespace FlexAuth\Type\UserbaseClient;
 
-
 use FlexAuth\Type\UserProviderFactoryInterface;
 use UserBase\Client\UserProvider;
 use UserBase\Client\Client;
 
+/**
+ * Class UserbaseClientUserProviderFactory
+ * @author Aleksandr Arofikin <sashaaro@gmail.com>
+ */
 class UserbaseClientUserProviderFactory implements UserProviderFactoryInterface
 {
     public const TYPE = 'userbase';

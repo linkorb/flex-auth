@@ -16,8 +16,8 @@
   },
   "suggest": {
     "userbase/client": "Required for support userbase type format",
-    "symfony/doctrine-bridge": "Required for support entity type format. Prefer ^4.0",
-    "symfony/http-foundation": "Required for support jwt type format. Prefer ^4.0",
-    "firebase/php-jwt": "Required for support jwt type format. Prefer ^5.0"
+    "symfony/doctrine-bridge": "Required for support flex-auth entity type format. Prefer ^4.0",
+    "symfony/http-foundation": "Required for support flex-auth jwt type format. Prefer ^4.0",
+    "firebase/php-jwt": "Required for support flex-auth jwt type format. Prefer ^5.0"
   }
 }

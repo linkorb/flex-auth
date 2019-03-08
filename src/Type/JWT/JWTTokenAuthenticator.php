@@ -126,8 +126,4 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
     {
         return false;
     }
-
-
-
-
 }

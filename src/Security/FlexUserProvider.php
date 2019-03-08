@@ -12,9 +12,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class FlexUserProvider implements UserProviderInterface
 {
-    /**
-     * @var UserProviderFactory
-     */
+    /** @var UserProviderFactory */
     protected $userProviderFactory;
 
     public function __construct(UserProviderFactory $userProviderFactory)
