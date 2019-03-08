@@ -18,7 +18,7 @@ class UserbaseClientUserProviderFactory implements UserProviderFactoryInterface
     {
         $client = new Client(
             $params["url"],
-            array_key_exists('usersname', $params) ? $params["username"] : null,
+            array_key_exists('username', $params) ? $params["username"] : null,
             array_key_exists('password', $params) ? $params["password"] : null
         );
 
