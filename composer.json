@@ -1,0 +1,23 @@
+{
+  "name": "linkorb/flex-auth",
+  "description": "This libraries provides flex auth for symfony security in runtime",
+  "keywords": ["auth"],
+  "license": "MIT",
+  "autoload":{
+    "psr-4":{
+      "FlexAuth\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.0",
+    "symfony/security": "^4.0"
+  },
+  "require-dev": {
+  },
+  "suggest": {
+    "userbase/client": "Required for support userbase type format",
+    "symfony/doctrine-bridge": "Required for support flex-auth entity type format. Prefer ^4.0",
+    "symfony/http-foundation": "Required for support flex-auth jwt type format. Prefer ^4.0",
+    "firebase/php-jwt": "Required for support flex-auth jwt type format. Prefer ^5.0"
+  }
+}
