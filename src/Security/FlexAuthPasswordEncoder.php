@@ -17,22 +17,18 @@ class FlexAuthPasswordEncoder implements PasswordEncoderInterface
 {
     /** @var AuthFlexTypeProviderInterface */
     protected $flexAuthTypeProvider;
-    /** @var PasswordEncoderInterface|null */
-    protected $defaultEncoder;
 
     private $encoders = [
         'plaintext' => PlaintextPasswordEncoder::class,
         'pbkdf2' => Pbkdf2PasswordEncoder::class,
-        'bcrypt' => BCryptPasswordEncoder::class,
+        // 'bcrypt' => BCryptPasswordEncoder::class,
         'argon2i' => Argon2iPasswordEncoder::class,
+        'plain' => PlaintextPasswordEncoder::class
     ];
 
-    public function __construct(
-        AuthFlexTypeProviderInterface $flexAuthTypeProvider,
-        PasswordEncoderInterface $defaultEncoder = null
-    ) {
+    public function __construct(AuthFlexTypeProviderInterface $flexAuthTypeProvider)
+    {
         $this->flexAuthTypeProvider = $flexAuthTypeProvider;
-        $this->defaultEncoder = $defaultEncoder;
     }
 
     /**
@@ -72,19 +68,15 @@ class FlexAuthPasswordEncoder implements PasswordEncoderInterface
         $params = $this->flexAuthTypeProvider->provide();
         $encoder = $params['encoder'] ?? null;
         if (!$encoder) {
-            if (!$this->defaultEncoder) {
-                throw new \Exception("No flex auth password encoder");
-            }
-
-            return $this->defaultEncoder;
-        } else {
-            if (!isset($this->encoders[$encoder])) {
-                throw new \Exception(sprintf('Encoder "%s" is not supported'));
-            } else {
-                // TODO improve and inject FlexAuthEncoderFactory?!
-                $className = $this->encoders[$encoder];
-                return new $className();
-            }
+            throw new \Exception(sprintf('Flex auth password encoder is not defined'));
         }
+
+        if (!isset($this->encoders[$encoder])) {
+            throw new \Exception(sprintf('Encoder "%s" is not supported', $encoder));
+        }
+
+        // TODO improve and inject FlexAuthEncoderFactory?!
+        $className = $this->encoders[$encoder];
+        return new $className();
     }
 }
