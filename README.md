@@ -52,10 +52,19 @@ class MyAuthFlexTypeProvider implements AuthFlexTypeProviderInterface {
 }
 ```
 
+Full working example you can see ```/test/AuthenticationTest::testAuthenticate```
 
 Run tests
 ```
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
 ```
 
-For example see ```/test/AuthenticationTest::testAuthenticate```
+### Links
+
+[FlexAuthBundle - symfony bundle](https://github.com/linkorb/flex-auth-bundle).
+[Demo](https://github.com/linkorb/flex-auth-bundle-demo)
+
+[FlexAuthProvider - silex provider](https://github.com/linkorb/flex-auth-provider).
+[Demo](https://github.com/linkorb/flex-auth-provider-demo)
+
+[The Security Component(Symfony Docs)](https://symfony.com/doc/current/components/security.html)
