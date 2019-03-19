@@ -8,26 +8,26 @@ namespace FlexAuth;
  */
 class AuthFlexTypeProviderFactory
 {
-    public static function fromEnv(string $envVar)
+    public static function fromEnv(string $envVarName)
     {
-        return new AuthFlexTypeCallbackProvider(function () use($envVar) {
-            return self::resolveParamsFromEnv($envVar);
+        return new AuthFlexTypeCallbackProvider(function () use($envVarName) {
+            return self::resolveParamsFromEnv($envVarName);
         });
     }
 
-    public static function resolveParamsFromEnv($envVar)
+    public static function resolveParamsFromEnv($envVarName)
     {
-        if (!array_key_exists($envVar, $_ENV)) {
-            throw new \Exception(sprintf('Env variable "%s" is not found', $envVar));
+        if (!array_key_exists($envVarName, $_ENV)) {
+            throw new \Exception(sprintf('Env variable "%s" is not found', $envVarName));
         }
-        $type = $_ENV[$envVar];
+        $type = $_ENV[$envVarName];
 
         try {
             $params = self::resolveParamsFromLine($type);
         } catch (\InvalidArgumentException $e) {
             $params = [];
             foreach ($_ENV as $key => $value) {
-                if (strpos($key, $envVar.'_') === 0) {
+                if (strpos($key, $envVarName.'_') === 0) {
                     $paramKey = substr($key, 0, strlen($key.'_'));
                     $params[strtolower($paramKey)] = $value;
                 }
