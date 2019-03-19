@@ -8,11 +8,17 @@
       "FlexAuth\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "GeneratedHydratorTest\\": "tests/FlexAuthTest"
+    }
+  },
   "require": {
     "php": "^7.0",
     "symfony/security": "^4.0"
   },
   "require-dev": {
+    "phpunit/phpunit": "^8"
   },
   "suggest": {
     "userbase/client": "Required for support userbase type format",
