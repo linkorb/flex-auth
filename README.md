@@ -59,7 +59,7 @@ Run tests
 ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/
 ```
 
-###Links
+### Links
 
 [FlexAuthBundle - symfony bundle](https://github.com/linkorb/flex-auth-bundle).
 [Demo](https://github.com/linkorb/flex-auth-bundle-demo)
