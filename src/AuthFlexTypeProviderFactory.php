@@ -55,7 +55,7 @@ class AuthFlexTypeProviderFactory
 
         $stringParams = $parts[2];
         foreach (explode("&", $stringParams) as $keyValue) {
-            [$key, $value] = explode("=", $keyValue);
+            [$key, $value] = explode("=", $keyValue, 2);
             if ($key && $value) {
                 $params[$key] = $value;
             }
