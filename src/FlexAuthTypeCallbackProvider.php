@@ -3,10 +3,10 @@
 namespace FlexAuth;
 
 /**
- * Class AuthFlexTypeCallbackProvider
+ * Class FlexAuthTypeCallbackProvider
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
-class AuthFlexTypeCallbackProvider implements AuthFlexTypeProviderInterface
+class FlexAuthTypeCallbackProvider implements FlexAuthTypeProviderInterface
 {
     /** @var callable */
     private $callback;

@@ -3,10 +3,10 @@
 namespace FlexAuth;
 
 /**
- * Interface AuthFlexTypeProviderInterface
+ * Interface FlexAuthTypeProviderInterface
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
-interface AuthFlexTypeProviderInterface
+interface FlexAuthTypeProviderInterface
 {
     /**
      * Provider configuration for runtime which to pass to UserProviderFactoryInterface::create as params

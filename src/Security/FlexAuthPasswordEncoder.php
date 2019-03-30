@@ -2,7 +2,7 @@
 
 namespace FlexAuth\Security;
 
-use FlexAuth\AuthFlexTypeProviderInterface;
+use FlexAuth\FlexAuthTypeProviderInterface;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder;
  */
 class FlexAuthPasswordEncoder implements PasswordEncoderInterface
 {
-    /** @var AuthFlexTypeProviderInterface */
+    /** @var FlexAuthTypeProviderInterface */
     protected $flexAuthTypeProvider;
 
     private $encoders = [
@@ -26,7 +26,7 @@ class FlexAuthPasswordEncoder implements PasswordEncoderInterface
         'plain' => PlaintextPasswordEncoder::class
     ];
 
-    public function __construct(AuthFlexTypeProviderInterface $flexAuthTypeProvider)
+    public function __construct(FlexAuthTypeProviderInterface $flexAuthTypeProvider)
     {
         $this->flexAuthTypeProvider = $flexAuthTypeProvider;
     }

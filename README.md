@@ -6,9 +6,9 @@ Allows switching the `UserProvider` at Runtime using environment variables.
 Dynamic UserProvider that supports multiple backends based on environment variables.
 
 To override which should provider configuration as array for runtime
-```FlexAuth\AuthFlexTypeProviderInterface```
+```FlexAuth\FlexAuthTypeProviderInterface```
 
-Using ```FlexAuth\AuthFlexTypeProviderFactory::fromEnv('FLEX_AUTH'')``` and define env variables in format
+Using ```FlexAuth\FlexAuthTypeProviderFactory::fromEnv('FLEX_AUTH'')``` and define env variables in format
 `type?param1=value1&param2=value2&param3=value3`
 
 Example define environment variable
@@ -33,7 +33,7 @@ FLEX_AUTH_ENTITY_PROPERTY=username
 
 Dynamically flex type provider example.
 ```php
-class MyAuthFlexTypeProvider implements AuthFlexTypeProviderInterface {
+class MyFlexAuthTypeProvider implements FlexAuthTypeProviderInterface {
     protected $className = \App\Entities\User::class; // can be change in runtime
     protected $propery = 'id';
     

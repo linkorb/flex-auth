@@ -2,7 +2,7 @@
 
 namespace FlexAuth\Type\JWT;
 
-use FlexAuth\AuthFlexTypeProviderInterface;
+use FlexAuth\FlexAuthTypeProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -25,18 +25,18 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
     private $JWTUserFactory;
     /** @var JWTEncoderInterface */
     private $JWTEncoder;
-    /** @var AuthFlexTypeProviderInterface */
-    private $authFlexTypeProvider;
+    /** @var FlexAuthTypeProviderInterface */
+    private $flexAuthTypeProvider;
 
     public function __construct(
         JWTUserFactoryInterface $JWTUserFactory,
         JWTEncoderInterface $JWTEncoder,
-        AuthFlexTypeProviderInterface $authFlexTypeProvider
+        FlexAuthTypeProviderInterface $flexAuthTypeProvider
     )
     {
         $this->JWTUserFactory = $JWTUserFactory;
         $this->JWTEncoder = $JWTEncoder;
-        $this->authFlexTypeProvider = $authFlexTypeProvider;
+        $this->flexAuthTypeProvider = $flexAuthTypeProvider;
     }
 
     public function supports(Request $request)
@@ -65,7 +65,7 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function createTokenFromUser(UserInterface $user): string
     {
-        $params = $this->authFlexTypeProvider->provide();
+        $params = $this->flexAuthTypeProvider->provide();
         $userField = $params['user_field'] ?? 'username';
         $roleField = $params['role_field'] ?? 'permissions';
 
@@ -83,11 +83,11 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
     {
         if (!is_string($credentialsToken)) {
             throw new \InvalidArgumentException(
-                sprintf('The first argument of the "%s()" method must be string.', __METHOD__, __CLASS__)
+                sprintf('The first argument of the "%s::%s()" method must be string.', __CLASS__, __METHOD__)
             );
         }
 
-        $params = $this->authFlexTypeProvider->provide();
+        $params = $this->flexAuthTypeProvider->provide();
         $userField = $params['user_field'] ?? 'username';
         $roleField = $params['role_field'] ?? 'permissions';
 
