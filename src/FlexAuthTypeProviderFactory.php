@@ -3,14 +3,14 @@
 namespace FlexAuth;
 
 /**
- * Class AuthFlexTypeProviderFactory
+ * Class FlexAuthTypeProviderFactory
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
-class AuthFlexTypeProviderFactory
+class FlexAuthTypeProviderFactory
 {
     public static function fromEnv(string $envVarName)
     {
-        return new AuthFlexTypeCallbackProvider(function () use($envVarName) {
+        return new FlexAuthTypeCallbackProvider(function () use($envVarName) {
             return self::resolveParamsFromEnv($envVarName);
         });
     }

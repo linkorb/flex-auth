@@ -16,11 +16,11 @@ class UserProviderFactory
     /** @var UserProviderFactoryInterface[] */
     protected $factories = [];
 
-    protected $authFlexTypeProvider;
+    protected $flexAuthTypeProvider;
 
-    public function __construct(AuthFlexTypeProviderInterface $authFlexTypeProvider)
+    public function __construct(FlexAuthTypeProviderInterface $flexAuthTypeProvider)
     {
-        $this->authFlexTypeProvider = $authFlexTypeProvider;
+        $this->flexAuthTypeProvider = $flexAuthTypeProvider;
     }
 
     public function addType($typeKey, UserProviderFactoryInterface $userFactory)
@@ -64,7 +64,7 @@ class UserProviderFactory
      */
     private function resolveTypeAndParams()
     {
-        $flexAuthData = $this->authFlexTypeProvider->provide();
+        $flexAuthData = $this->flexAuthTypeProvider->provide();
 
         $allowTypes = array_keys($this->factories);
 

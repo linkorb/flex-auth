@@ -3,7 +3,7 @@
 namespace FlexAuth\Type\JWT;
 
 use Firebase\JWT\JWT;
-use FlexAuth\AuthFlexTypeProviderInterface;
+use FlexAuth\FlexAuthTypeProviderInterface;
 
 /**
  * Class FlexTypeJWTEncoder
@@ -11,12 +11,12 @@ use FlexAuth\AuthFlexTypeProviderInterface;
  */
 class FlexTypeJWTEncoder implements EnableJWTEncoderInterface
 {
-    /** @var AuthFlexTypeProviderInterface */
-    private $authFlexTypeProvider;
+    /** @var FlexAuthTypeProviderInterface */
+    private $flexAuthTypeProvider;
 
-    public function __construct(AuthFlexTypeProviderInterface $authFlexTypeProvider)
+    public function __construct(FlexAuthTypeProviderInterface $flexAuthTypeProvider)
     {
-        $this->authFlexTypeProvider = $authFlexTypeProvider;
+        $this->flexAuthTypeProvider = $flexAuthTypeProvider;
     }
 
     public function encode(array $data)
@@ -31,21 +31,21 @@ class FlexTypeJWTEncoder implements EnableJWTEncoderInterface
 
     public function isEnabled(): bool
     {
-        $params = $this->authFlexTypeProvider->provide();
+        $params = $this->flexAuthTypeProvider->provide();
 
         return $params['type'] === JWTUserProviderFactory::TYPE;
     }
 
     private function getAlgorithm()
     {
-        $params = $this->authFlexTypeProvider->provide();
+        $params = $this->flexAuthTypeProvider->provide();
 
         return array_key_exists('algo', $params) ? $params['algo'] : 'RS256';
     }
 
     private function getPrivateKey()
     {
-        $params = $this->authFlexTypeProvider->provide();
+        $params = $this->flexAuthTypeProvider->provide();
         $privateKey = $params['private_key'];
 
         $isFilePath = substr($privateKey, 0, 1) === '@';
@@ -66,7 +66,7 @@ class FlexTypeJWTEncoder implements EnableJWTEncoderInterface
 
     private function getPublicKey()
     {
-        $params = $this->authFlexTypeProvider->provide();
+        $params = $this->flexAuthTypeProvider->provide();
 
         $publicKey = $params['public_key'];
         $isFilePath = substr($publicKey, 0, 1) === '@';

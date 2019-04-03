@@ -22,7 +22,7 @@ class AuthenticationTest extends TestCase
 {
     public function testAuthenticate() {
         $envName = 'FLEX_AUTH';
-        $typeProvider = \FlexAuth\AuthFlexTypeProviderFactory::fromEnv($envName);
+        $typeProvider = \FlexAuth\FlexAuthTypeProviderFactory::fromEnv($envName);
 
         $userFactory = new \FlexAuth\UserProviderFactory($typeProvider);
         $userFactory->addType(MemoryUserProviderFactory::TYPE, new MemoryUserProviderFactory());
