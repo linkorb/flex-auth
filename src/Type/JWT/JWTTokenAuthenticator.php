@@ -96,7 +96,7 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
 
         $user = $this->JWTUserFactory->createFromPayload([
             'username' => $decodedPayload->{$userField},
-            'roles' => explode(",", $decodedPayload->{$roleField})
+            'roles' => explode(",", $decodedPayload->{$roleField} ?? '')
         ]);
 
         return $user;
