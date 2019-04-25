@@ -3,6 +3,7 @@
 namespace FlexAuth\Type\JWT;
 
 use FlexAuth\FlexAuthTypeProviderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -20,23 +21,26 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
     const TOKEN_HEADER = 'Authorization';
     const TOKEN_PREFIX = 'Bearer ';
 
-
     /** @var JWTUserFactoryInterface */
     private $JWTUserFactory;
     /** @var JWTEncoderInterface */
     private $JWTEncoder;
     /** @var FlexAuthTypeProviderInterface */
     private $flexAuthTypeProvider;
+    /** @var string|null */
+    private $loginUrl;
 
     public function __construct(
         JWTUserFactoryInterface $JWTUserFactory,
         JWTEncoderInterface $JWTEncoder,
-        FlexAuthTypeProviderInterface $flexAuthTypeProvider
+        FlexAuthTypeProviderInterface $flexAuthTypeProvider,
+        ?string $loginUrl = null
     )
     {
         $this->JWTUserFactory = $JWTUserFactory;
         $this->JWTEncoder = $JWTEncoder;
         $this->flexAuthTypeProvider = $flexAuthTypeProvider;
+        $this->loginUrl = $loginUrl ?? '/login';
     }
 
     public function supports(Request $request)
@@ -109,7 +113,12 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new Response(sprintf('"%s" header required', self::TOKEN_HEADER), 401);
+        $isAcceptHtml = $request->headers->has('Accept') && strpos($request->headers->get('Accept'), 'text/html') !== false;
+        if ($this->loginUrl && $isAcceptHtml) {
+            return new RedirectResponse($this->loginUrl);
+        } else {
+            return new Response(sprintf('"%s" header required', self::TOKEN_HEADER), 401);
+        }
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
