@@ -40,7 +40,7 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
         $this->JWTUserFactory = $JWTUserFactory;
         $this->JWTEncoder = $JWTEncoder;
         $this->flexAuthTypeProvider = $flexAuthTypeProvider;
-        $this->loginUrl = $loginUrl ?? '/login';
+        $this->loginUrl = $loginUrl;
     }
 
     public function supports(Request $request)
