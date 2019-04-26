@@ -2,6 +2,10 @@
 
 namespace FlexAuth\Type\JWT;
 
+use FlexAuth\Type\JWT\Exception\JWTDecodeFailureException;
+use FlexAuth\Type\JWT\Exception\JWTEncodeFailureException;
+use FlexAuth\Type\JWT\Exception\JWTTokenExpiredException;
+
 /**
  * Interface JWTEncoderInterface
  * @author Aleksandr Arofikin <sashaaro@gmail.com>

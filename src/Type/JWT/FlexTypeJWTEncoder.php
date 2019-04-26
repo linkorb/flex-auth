@@ -5,6 +5,8 @@ namespace FlexAuth\Type\JWT;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use FlexAuth\FlexAuthTypeProviderInterface;
+use FlexAuth\Type\JWT\Exception\JWTDecodeFailureException;
+use FlexAuth\Type\JWT\Exception\JWTTokenExpiredException;
 
 /**
  * Class FlexTypeJWTEncoder

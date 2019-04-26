@@ -1,6 +1,6 @@
 <?php
 
-namespace FlexAuth\Type\JWT;
+namespace FlexAuth\Type\JWT\Exception;
 
 class JWTTokenExpiredException extends JWTDecodeFailureException
 {
