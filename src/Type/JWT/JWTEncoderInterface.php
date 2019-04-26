@@ -2,6 +2,10 @@
 
 namespace FlexAuth\Type\JWT;
 
+use FlexAuth\Type\JWT\Exception\JWTDecodeFailureException;
+use FlexAuth\Type\JWT\Exception\JWTEncodeFailureException;
+use FlexAuth\Type\JWT\Exception\JWTTokenExpiredException;
+
 /**
  * Interface JWTEncoderInterface
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
@@ -22,7 +26,7 @@ interface JWTEncoderInterface
      *
      * @return array
      *
-     * @throws JWTDecodeFailureException If an error occurred while trying to load the token
+     * @throws JWTDecodeFailureException|JWTTokenExpiredException If an error occurred while trying to load the token
      *                                   (invalid signature, invalid crypto key, expired token...)
      */
     public function decode($token);
