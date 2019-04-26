@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
  * Allow dynamically determinate firewall is stateless or not.
  * Serve for switch between login via form with session authentication and jwt which stateless
  *
- * Class FlexAuthContextListener
+ * Class FlexAuthContextListenerDecorator
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
 class FlexAuthContextListenerDecorator implements ListenerInterface
