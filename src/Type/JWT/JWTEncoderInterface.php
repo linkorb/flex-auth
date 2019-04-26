@@ -22,7 +22,7 @@ interface JWTEncoderInterface
      *
      * @return array
      *
-     * @throws JWTDecodeFailureException If an error occurred while trying to load the token
+     * @throws JWTDecodeFailureException|JWTTokenExpiredException If an error occurred while trying to load the token
      *                                   (invalid signature, invalid crypto key, expired token...)
      */
     public function decode($token);

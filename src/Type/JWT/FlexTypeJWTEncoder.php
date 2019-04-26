@@ -2,6 +2,7 @@
 
 namespace FlexAuth\Type\JWT;
 
+use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
 use FlexAuth\FlexAuthTypeProviderInterface;
 
@@ -26,7 +27,15 @@ class FlexTypeJWTEncoder implements EnableJWTEncoderInterface
 
     public function decode($token)
     {
-        return JWT::decode($token, $this->getPublicKey(), [$this->getAlgorithm()]);
+        try {
+            $payload = JWT::decode($token, $this->getPublicKey(), [$this->getAlgorithm()]);
+        } catch (ExpiredException $e) {
+            throw new JWTTokenExpiredException();
+        } catch (\UnexpectedValueException $e) {
+            throw new JWTDecodeFailureException();
+        }
+
+        return $payload;
     }
 
     public function isEnabled(): bool

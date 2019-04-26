@@ -64,6 +64,7 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
         } else {
             $token = $request->query->get('jwt');
         }
+
         return $token;
     }
 
@@ -96,7 +97,12 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
         $roleField = $params['role_field'] ?? 'permissions';
 
         $encodedPayload = $credentialsToken;
-        $decodedPayload = $this->JWTEncoder->decode($encodedPayload);
+        $decodedPayload = null;
+        try {
+            $decodedPayload = $this->JWTEncoder->decode($encodedPayload);
+        } catch (JWTDecodeFailureException|JWTTokenExpiredException $exception) {
+            throw new AuthenticationException('', 0, $exception);
+        }
 
         $user = $this->JWTUserFactory->createFromPayload([
             'username' => $decodedPayload->{$userField},
@@ -113,22 +119,30 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $isAcceptHtml = $request->headers->has('Accept') && strpos($request->headers->get('Accept'), 'text/html') !== false;
-        if ($this->loginUrl && $isAcceptHtml) {
+        if ($this->loginUrl && $this->isAcceptHtml($request)) {
             return new RedirectResponse($this->loginUrl);
         } else {
-            return new Response(sprintf('"%s" header required', self::TOKEN_HEADER), 401);
+            return new Response(sprintf('"%s" header required', self::TOKEN_HEADER), Response::HTTP_UNAUTHORIZED);
         }
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-
+        if ($this->loginUrl && $this->isAcceptHtml($request)) {
+            return new RedirectResponse($this->loginUrl);
+        } else {
+            $message = $exception->getPrevious() instanceof JWTTokenExpiredException ? 'JWT token is expired' : 'Authentication failure';
+            return new Response($message, Response::HTTP_UNAUTHORIZED);
+        }
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+    }
 
+    private function isAcceptHtml(Request $request)
+    {
+        return $request->headers->has('Accept') && strpos($request->headers->get('Accept'), 'text/html') !== false;
     }
 
     public function supportsRememberMe()
