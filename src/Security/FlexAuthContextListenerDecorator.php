@@ -4,9 +4,7 @@ namespace FlexAuth\Security;
 
 use FlexAuth\FlexAuthTypeProviderInterface;
 use FlexAuth\Type\JWT\JWTUserProviderFactory;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Http\Firewall\ContextListener;
-use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
 /**
  * Allow dynamically determinate firewall is stateless or not.
@@ -15,29 +13,29 @@ use Symfony\Component\Security\Http\Firewall\ListenerInterface;
  * Class FlexAuthContextListenerDecorator
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
-class FlexAuthContextListenerDecorator implements ListenerInterface
+class FlexAuthContextListenerDecorator extends EnableListenerDecorator
 {
     /** @var FlexAuthTypeProviderInterface */
     protected $authTypeProvider;
 
-    /** @var ContextListener */
-    protected $contextListener;
-
     protected $statelessTypes = [
         JWTUserProviderFactory::TYPE
     ];
-    
-    public function __constructor(ContextListener $contextListener, FlexAuthTypeProviderInterface $authTypeProvider)
+
+    public function __construct(ContextListener $contextListener, FlexAuthTypeProviderInterface $authTypeProvider)
     {
-        $this->contextListener = $contextListener;
+        parent::__construct($contextListener);
         $this->authTypeProvider = $authTypeProvider;
     }
 
-    public function handle(GetResponseEvent $event): void
+    public function isEnabled(): bool
     {
-        if (!in_array($this->authTypeProvider->provide()['type'], $this->statelessTypes, true)) {
-            $this->contextListener->handle($event);
-        }
+        return !$this->isStateless();
+    }
+
+    private function isStateless()
+    {
+        return in_array($this->authTypeProvider->provide()['type'], $this->statelessTypes, true);
     }
 
     public function addStatelessType(string $type)
