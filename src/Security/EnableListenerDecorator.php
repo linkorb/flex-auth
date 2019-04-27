@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FlexAuth\Security;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
