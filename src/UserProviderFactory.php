@@ -13,23 +13,15 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class UserProviderFactory
 {
-    /** @var UserProviderFactoryInterface[] */
-    protected $factories = [];
-
+    /** @var FlexAuthTypeProviderInterface */
     protected $flexAuthTypeProvider;
+    /** @var UserProviderRegistry */
+    protected $userProviderRegistry;
 
-    public function __construct(FlexAuthTypeProviderInterface $flexAuthTypeProvider)
+    public function __construct(FlexAuthTypeProviderInterface $flexAuthTypeProvider, UserProviderRegistry $userProviderRegistry)
     {
         $this->flexAuthTypeProvider = $flexAuthTypeProvider;
-    }
-
-    public function addType($typeKey, UserProviderFactoryInterface $userFactory)
-    {
-        if (array_key_exists($typeKey, $this->factories)) {
-            throw new \InvalidArgumentException(sprintf('Auth type "%s" was added already', $typeKey));
-        }
-
-        $this->factories[$typeKey] = $userFactory;
+        $this->userProviderRegistry = $userProviderRegistry;
     }
 
     /**
@@ -45,8 +37,8 @@ class UserProviderFactory
         if (!array_key_exists($type, $this->factories)) {
             throw new \InvalidArgumentException(sprintf('Auth type "%s" is not supported', $type));
         }
-        $factory = $this->factories[$type];
 
+        $factory = $this->userProviderRegistry->get($type);
         $userProvider = $factory->create($params);
 
         if ($userProvider === null) {
@@ -56,7 +48,6 @@ class UserProviderFactory
         return $userProvider;
     }
 
-
     /**
      * Resolve rype and params from env string
      * @return array
@@ -65,8 +56,7 @@ class UserProviderFactory
     private function resolveTypeAndParams()
     {
         $flexAuthData = $this->flexAuthTypeProvider->provide();
-
-        $allowTypes = array_keys($this->factories);
+        $allowTypes = $this->userProviderRegistry->getExistTypes();
 
         if (is_null($flexAuthData['type'])) {
             throw new \InvalidArgumentException();
