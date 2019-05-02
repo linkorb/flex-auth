@@ -12,13 +12,14 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Guard\AuthenticatorInterface;
+use Symfony\Component\Security\Guard\Token\GuardTokenInterface;
 
 /**
  * Class JWTTokenAuthenticator
  * @author Aleksandr Arofikin <sashaaro@gmail.com>
  */
-class JWTTokenAuthenticator extends AbstractGuardAuthenticator
+class JWTTokenAuthenticator implements AuthenticatorInterface
 {
     const TOKEN_HEADER = 'Authorization';
     const TOKEN_PREFIX = 'Bearer ';
@@ -145,6 +146,12 @@ class JWTTokenAuthenticator extends AbstractGuardAuthenticator
     private function isAcceptHtml(Request $request)
     {
         return $request->headers->has('Accept') && strpos($request->headers->get('Accept'), 'text/html') !== false;
+    }
+
+    public function createAuthenticatedToken(UserInterface $user, $providerKey)
+    {
+        // TODO pass raw token
+        return new JWTToken($user, '', []);
     }
 
     public function supportsRememberMe()
