@@ -3,7 +3,6 @@
 namespace FlexAuth\Security;
 
 use FlexAuth\FlexAuthTypeProviderInterface;
-use FlexAuth\Type\JWT\JWTUserProviderFactory;
 use Symfony\Component\Security\Http\Firewall\ContextListener;
 
 /**
@@ -18,9 +17,7 @@ class FlexAuthContextListenerDecorator extends EnableListenerDecorator
     /** @var FlexAuthTypeProviderInterface */
     protected $authTypeProvider;
 
-    protected $statelessTypes = [
-        JWTUserProviderFactory::TYPE
-    ];
+    protected $statelessTypes = [];
 
     public function __construct(ContextListener $contextListener, FlexAuthTypeProviderInterface $authTypeProvider)
     {
