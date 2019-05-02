@@ -2,7 +2,7 @@
 
 namespace FlexAuth\Type\JWT;
 
-use FlexAuth\FlexAuthTypeProviderInterface;
+use FlexAuth\TypeProvider\FlexAuthTypeProviderInterface;
 use FlexAuth\Type\JWT\Exception\JWTDecodeFailureException;
 use FlexAuth\Type\JWT\Exception\JWTTokenExpiredException;
 use Symfony\Component\HttpFoundation\RedirectResponse;

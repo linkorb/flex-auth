@@ -4,7 +4,7 @@ namespace FlexAuth;
 
 use FlexAuth\Type\InvalidParamsException;
 use FlexAuth\Type\NullUserProvider;
-use FlexAuth\Type\UserProviderFactoryInterface;
+use FlexAuth\TypeProvider\FlexAuthTypeProviderInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
@@ -34,7 +34,7 @@ class UserProviderFactory
         $type = $result[0];
         $params = $result[1];
 
-        if (!array_key_exists($type, $this->factories)) {
+        if (!in_array($type, $this->userProviderRegistry->getExistTypes(), true)) {
             throw new \InvalidArgumentException(sprintf('Auth type "%s" is not supported', $type));
         }
 

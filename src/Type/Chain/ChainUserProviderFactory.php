@@ -24,11 +24,11 @@ class ChainUserProviderFactory implements UserProviderFactoryInterface
     public function create($params)
     {
         $userProviders = [];
-        foreach ($params as $name => $options)
+        foreach ($params['types'] as $name => $options)
         {
             $factory = $this->userProviderRegistry->get($name);
             if (!$factory) {
-                throw new \InvalidArgumentException();// type not exists
+                throw new \InvalidArgumentException("'$name' type not exists");
             }
 
             $userProviders[] = $factory->create($options);

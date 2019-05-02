@@ -1,6 +1,6 @@
 <?php
 
-namespace FlexAuth;
+namespace FlexAuth\TypeProvider;
 
 /**
  * Interface FlexAuthTypeProviderInterface
