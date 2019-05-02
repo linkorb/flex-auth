@@ -4,6 +4,7 @@ namespace FlexAuth\Type\Chain;
 
 use FlexAuth\Type\UserProviderFactoryInterface;
 use FlexAuth\UserProviderRegistry;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\ChainUserProvider;
 
 /**
@@ -14,11 +15,15 @@ class ChainUserProviderFactory implements UserProviderFactoryInterface
 {
     const TYPE = 'chain';
 
+    /** @var UserProviderRegistry */
     private $userProviderRegistry;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
 
-    public function __construct(UserProviderRegistry $userProviderRegistry)
+    public function __construct(UserProviderRegistry $userProviderRegistry, EventDispatcherInterface $eventDispatcher)
     {
         $this->userProviderRegistry = $userProviderRegistry;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function create($params)
@@ -31,7 +36,7 @@ class ChainUserProviderFactory implements UserProviderFactoryInterface
                 throw new \InvalidArgumentException("'$name' type not exists");
             }
 
-            $userProviders[] = $factory->create($options);
+            $userProviders[] = new TriggeredUserProvider($factory->create($options), $this->eventDispatcher, $options + ['type' => $name]);
         }
 
         return new ChainUserProvider($userProviders);
