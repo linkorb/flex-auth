@@ -2,7 +2,7 @@
 
 namespace FlexAuth\Security;
 
-use FlexAuth\FlexAuthTypeProviderInterface;
+use FlexAuth\TypeProvider\FlexAuthTypeProviderInterface;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;

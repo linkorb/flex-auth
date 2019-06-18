@@ -14,7 +14,7 @@ interface UserProviderFactoryInterface
      * Returns null if flex auth type don't need to have own UserProvider as for JWT
      *
      * @param mixed $params
-     * @return UserProviderInterface\|null
+     * @return UserProviderInterface|null
      * @throws InvalidParamsException
      */
     public function create($params); // TODO type hint : ?UserProviderInterface;
