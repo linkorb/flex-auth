@@ -19,7 +19,7 @@ class MemoryUserProviderFactory implements UserProviderFactoryInterface
             throw new \InvalidArgumentException();
         }
 
-        $users = $this->convertUserString($params['users']);
+        $users = $this->convertUserString($params['users']); // TODO move out
         return new InMemoryUserProvider($users);
     }
 
